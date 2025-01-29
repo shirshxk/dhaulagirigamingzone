@@ -1,7 +1,7 @@
-# Dhaulagiri Gamezone Database  
+# Dhaulagiri Gameing Zone Database  
 
 ## 📌 Overview  
-This repository contains SQL scripts for setting up a database for **Dhaulagiri Gamezone**. The database is designed to manage **customers, memberships, bookings, arcade machines, games, consoles, and sessions** efficiently.  
+This repository contains SQL scripts for setting up a database for **Dhaulagiri Gameing Zone**. The database is designed to manage **customers, memberships, bookings, arcade machines, games, consoles, and sessions** efficiently.  
 
 ## 📂 Project Structure  
 - 📄 `dhaulagiri_gamezone.sql` → Main script for database creation and data insertion  
