@@ -4,7 +4,8 @@
 This repository contains SQL scripts for setting up a database for **Dhaulagiri Gameing Zone**. The database is designed to manage **customers, memberships, bookings, arcade machines, games, consoles, and sessions** efficiently.  
 
 ## 📂 Project Structure  
-- 📄 `dhaulagiri_gamezone.sql` → Main script for database creation and data insertion  
+- 📄 `dhaulagiri_gamezone.sql` → Main script for database creation and data insertion
+- 📄 `additionalqueries.sql` → Additional queries  
 - 📄 `README.md` → Project documentation  
 
 ## 🛠️ Technologies Used  
@@ -31,6 +32,9 @@ Each table is properly structured with primary and foreign keys to maintain rela
 ✅ List machines by floor in descending order  
 ✅ Count console games for a specific console  
 ✅ Delete an arcade machine entry  
+
+## 🎥 Walkthrough Video
+📍 **YouTube:** [shirshxk](https://youtu.be/Lzg62xcfEcM)
 
 ## 👨‍💻 Author  
 📌 **Shirshak Shrestha**  
