@@ -1,11 +1,3 @@
-
--- ========================================
--- DATABASE CREATION -- shirshak shrestha
--- ========================================
-
-CREATE DATABASE dhaulagiri_gamezone;
-USE dhaulagiri_gamezone;
-
 -- ========================================
 -- CUSTOMER & MEMBERSHIP TABLES
 -- ========================================
@@ -38,6 +30,7 @@ CREATE TABLE dh_membership_type (
 INSERT INTO dh_membership_type (membership_name, membership_cost) VALUES
 ('Standard', 1500.00),
 ('Premium', 20000.00);
+-- shirshak shrestha
 
 -- Create dh_membership_brief table
 CREATE TABLE dh_membership_brief (
@@ -50,7 +43,6 @@ CREATE TABLE dh_membership_brief (
     FOREIGN KEY (customer_id) REFERENCES dh_customer(customer_id),
     FOREIGN KEY (membership_type_id) REFERENCES dh_membership_type(membership_type_id)
 );
--- shirshak shrestha
 
 -- Insert membership details
 INSERT INTO dh_membership_brief (customer_id, membership_type_id, signup_date, location, dob) VALUES
@@ -58,6 +50,7 @@ INSERT INTO dh_membership_brief (customer_id, membership_type_id, signup_date, l
 (3, 1, '2024-03-28', 'Putalisadak, Kathmandu', '2003-07-20'),
 (5, 2, '2024-02-15', 'Kapan, Kathmandu', '1973-05-01'),
 (6, 1, '2024-05-05', 'Lazimpat, Kathmandu', '1980-11-11');
+-- shirshak shrestha
 
 -- ========================================
 -- SESSION & BOOKING TABLES
@@ -91,7 +84,6 @@ CREATE TABLE dh_booking (
     FOREIGN KEY (session_id) REFERENCES dh_session(session_id),
     FOREIGN KEY (customer_id) REFERENCES dh_customer(customer_id)
 );
--- shirshak shrestha
 
 -- Insert booking data
 INSERT INTO dh_booking (session_id, customer_id, booking_date, is_paid_advance) VALUES
@@ -101,6 +93,7 @@ INSERT INTO dh_booking (session_id, customer_id, booking_date, is_paid_advance) 
 (1, 4, '2024-08-25', FALSE),
 (2, 5, '2024-07-22', FALSE),
 (4, 6, '2024-07-05', TRUE);
+-- shirshak shrestha
 
 -- ========================================
 -- STAFF MANAGEMENT TABLES
@@ -113,11 +106,26 @@ CREATE TABLE dh_staff (
     last_name VARCHAR(50) NOT NULL
 );
 
+-- Insert staff data
+INSERT INTO dh_staff (first_name, last_name) VALUES
+('Sagar', 'Aryal'),
+('Bikesh', 'Khagdi'),
+('Saroj', 'Sapkota'),
+('Jonathan', 'Shrestha'),
+('Rohan', 'Chaudhary'),
+('Rajeev', 'Karmacharya');
+
 -- Create dh_staff_role table
 CREATE TABLE dh_staff_role (
     role_id INT AUTO_INCREMENT PRIMARY KEY,
     role_name VARCHAR(50) NOT NULL
 );
+
+-- Insert staff roles
+INSERT INTO dh_staff_role (role_name) VALUES
+('Cafe'),
+('Counter'),
+('Maintenance');
 
 -- Create dh_session_staff table
 CREATE TABLE dh_session_staff (
@@ -130,16 +138,30 @@ CREATE TABLE dh_session_staff (
     FOREIGN KEY (role_id) REFERENCES dh_staff_role(role_id)
 );
 
+-- Insert session staff
+INSERT INTO dh_session_staff (session_id, staff_id, role_id) VALUES
+(1, 1, 1),
+(1, 2, 3),
+(1, 3, 2),
+(2, 4, 2),
+(2, 5, 3),
+(2, 6, 1);
+-- shirshak shrestha
+
 -- ========================================
 -- GAMES & ARCADE TABLES
 -- ========================================
--- shirshak shrestha
 
 -- Create dh_game_type table
 CREATE TABLE dh_game_type (
     type_id INT AUTO_INCREMENT PRIMARY KEY,
     type_name VARCHAR(50) NOT NULL
 );
+
+-- Insert game types
+INSERT INTO dh_game_type (type_name) VALUES
+('Arcade'),
+('Console');
 
 -- Create dh_games table
 CREATE TABLE dh_games (
@@ -148,6 +170,19 @@ CREATE TABLE dh_games (
     type_id INT NOT NULL,
     FOREIGN KEY (type_id) REFERENCES dh_game_type(type_id)
 );
+
+-- Insert games
+INSERT INTO dh_games (game_name, type_id) VALUES
+('Clash of Clans', 1),
+('Grand Theft Auto', 1),
+('Spiderman', 1),
+('PUBG', 1),
+('Elden Ring: Shadow of the ErdTree', 2),
+('Final Fantasy VII Rebirth', 2),
+('Destiny 2: The Final Shape', 2),
+('Tekken 8', 2),
+('Persona 3 Reload', 2),
+('Cavern of Dreams', 2);
 
 -- Create dh_arcade_machine table
 CREATE TABLE dh_arcade_machine (
@@ -158,14 +193,66 @@ CREATE TABLE dh_arcade_machine (
     FOREIGN KEY (game_id) REFERENCES dh_games(game_id)
 );
 
+-- Insert arcade machines
+INSERT INTO dh_arcade_machine (machine_number, game_id, floor) VALUES
+(23, 1, 1),
+(123, 2, 1),
+(45, 3, 2),
+(1234, 4, 1);
+
 -- Create dh_session_arcade table
 CREATE TABLE dh_session_arcade (
     session_arcade_id INT AUTO_INCREMENT PRIMARY KEY,
     session_id INT NOT NULL,
-    machine_id INT NOT NULL,
+    machine_id INT NOT_NULL,
     FOREIGN KEY (session_id) REFERENCES dh_session(session_id),
     FOREIGN KEY (machine_id) REFERENCES dh_arcade_machine(machine_id)
 );
+
+-- Insert session arcade
+INSERT INTO dh_session_arcade (session_id, machine_id) VALUES
+(1, 1),
+(1, 2),
+(1, 4),
+(2, 3),
+(3, 1),
+(3, 2),
+(3, 4),
+(4, 3);
+
+-- Create dh_pegi table
+CREATE TABLE dh_pegi (
+    rating_id INT AUTO_INCREMENT PRIMARY KEY,
+    game_id INT NOT NULL,
+    pegi_rating VARCHAR(10) NOT NULL,
+    FOREIGN KEY (game_id) REFERENCES dh_games(game_id)
+);
+
+-- shirshak shrestha
+-- Insert pegi rating
+INSERT INTO dh_pegi (game_id, pegi_rating) VALUES
+(5, 'PG'),
+(6, 'PG'),
+(7, 'PG'),
+(8, 'PG'),
+(9, 'PG'),
+(10, '15');
+
+-- Create dh_release_year table
+CREATE TABLE dh_release_year (
+    year_id INT AUTO_INCREMENT PRIMARY KEY,
+    game_id INT NOT NULL,
+    release_year YEAR NOT NULL,
+    FOREIGN KEY (game_id) REFERENCES dh_games(game_id)
+);
+
+-- shirshak shrestha
+-- Insert release year
+INSERT INTO dh_release_year (game_id, release_year) VALUES
+(1, 2010),
+(2, 2013),
+(3, 2016),
+(4, 2004);
 
 -- ========================================
 -- CONSOLES & SESSION TABLES
@@ -177,6 +264,14 @@ CREATE TABLE dh_console (
     console_name VARCHAR(100) NOT NULL
 );
 
+-- Insert consoles
+INSERT INTO dh_console (console_name) VALUES
+('Xbox 360'),
+('PS3'),
+('PS2'),
+('Nintendo 64'),
+('Nintendo Switch');
+
 -- Create dh_game_console table
 CREATE TABLE dh_game_console (
     game_console_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -184,9 +279,17 @@ CREATE TABLE dh_game_console (
     console_id INT NOT NULL,
     total_quantity INT NOT NULL,
     FOREIGN KEY (game_id) REFERENCES dh_games(game_id),
-    FOREIGN KEY (console_id) REFERENCES dh_console(console_id)
+    FOREIGN_KEY (console_id) REFERENCES dh_console(console_id)
 );
--- shirshak shrestha
+
+-- Insert game consoles
+INSERT INTO dh_game_console (game_id, console_id, total_quantity) VALUES
+(5, 1, 3),
+(6, 2, 2),
+(7, 3, 3),
+(8, 2, 2),
+(9, 4, 2),
+(10, 5, 4);
 
 -- Create dh_session_console table
 CREATE TABLE dh_session_console (
@@ -198,45 +301,10 @@ CREATE TABLE dh_session_console (
     FOREIGN KEY (game_console_id) REFERENCES dh_game_console(game_console_id)
 );
 
--- ========================================
--- FINAL QUERIES
--- ========================================
+-- Insert session console
+INSERT INTO dh_session_console (session_id, game_console_id, session_quantity) VALUES
+(1, 3, 2),
+(2, 2, 2);
 
--- Fetch unpaid customers
-SELECT c.first_name, c.last_name
-FROM dh_customer c
-JOIN dh_booking b ON c.customer_id = b.customer_id
-WHERE b.session_id = 1 AND b.is_paid_advance = FALSE;
 
--- Sort by machine_number
-SELECT *
-FROM dh_arcade_machine
-WHERE floor = 1
-ORDER BY machine_number DESC;
--- shirshak shrestha
 
--- Count PS3
-SELECT COUNT(*) AS total_console_games 
-FROM dh_game_console gc
-JOIN dh_console c ON gc.console_id = c.console_id
-WHERE c.console_name = 'PS3';
-
--- Staff Working on Session 1 with Maintenance Role
-SELECT s.first_name, s.last_name
-FROM dh_staff s
-JOIN dh_session_staff ss ON s.staff_id = ss.staff_id
-JOIN dh_staff_role sr ON ss.role_id = sr.role_id
-WHERE ss.session_id = 1 AND sr.role_name = 'Maintenance';
--- shirshak shrestha
-
--- Update PUBG floor
-UPDATE dh_arcade_machine 
-SET floor = 2 
-WHERE game_id = (SELECT game_id FROM dh_games WHERE game_name = 'PUBG');
-
--- Delete GTA machine
-DELETE FROM dh_session_arcade 
-WHERE machine_id = (SELECT machine_id FROM dh_arcade_machine WHERE game_id = 
-                   (SELECT game_id FROM dh_games WHERE game_name = 'Grand Theft Auto'));
-DELETE FROM dh_arcade_machine 
-WHERE game_id = (SELECT game_id FROM dh_games WHERE game_name = 'Grand Theft Auto');
